@@ -37,7 +37,6 @@ class RetrofitClient @Inject constructor() {
             .build()
     }
 
-    // ✅ CORRECT PLACEMENT: Lazy initialization for the service
     val htmlService: HtmlService by lazy {
         retrofit.create(HtmlService::class.java)
     }
@@ -45,9 +44,10 @@ class RetrofitClient @Inject constructor() {
     private fun createUserAgentInterceptor(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
-                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36") // Use a recent browser UA
+                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
                 .header("Accept-Language", "en-US,en;q=0.5")
+                .header("User-Agent", "WhatsApp/2.24.8.85")
                 .header("Referer", "https://www.google.com/")
                 .build()
             chain.proceed(request)

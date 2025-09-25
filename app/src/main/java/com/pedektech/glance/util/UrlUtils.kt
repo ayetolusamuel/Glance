@@ -37,14 +37,10 @@ object UrlUtils {
         return url.trim().removeSuffix("/")
     }
 
-//
-//
+
 //    /**
 //     * Validates if the given string is a valid URL
 //     */
-//    fun isValidUrl(url: String): Boolean {
-//        return Patterns.WEB_URL.matcher(url.trim()).matches()
-//    }
 
     /**
      * Resolves a relative URL against a base URL
