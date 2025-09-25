@@ -16,7 +16,7 @@ A modern Android application built with Jetpack Compose that generates beautiful
 ### Prerequisites
 
 - Android Studio Hedgehog or later
-- Android SDK 34+
+- Android SDK 36
 - Java 11
 
 ### Installation
