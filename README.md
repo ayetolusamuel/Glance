@@ -23,7 +23,7 @@ A modern Android application built with Jetpack Compose that generates beautiful
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/glance.git
+   git clone https://github.com/ayetolusamuel/glance.git
    cd glance
    ```
 
@@ -266,8 +266,3 @@ If you encounter any issues or have questions:
 
 ---
 
-<div align="center">
-
-### ⭐ Star this repo if you find it helpful!
-
-</div>
