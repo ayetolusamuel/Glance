@@ -70,21 +70,6 @@ class ImageScreenViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-//
-//
-//    private fun setupUrlDebouncing() {
-//        _uiState
-//            .map { it.inputText }
-//            .filter { url ->
-//                // Only proceed if URL is eligible AND no fetch is in progress
-//                UrlUtils.isUrlEligibleForPreview(url) && !_uiState.value.isFetching
-//            }
-//            .debounce(750L) // Wait for user to stop typing
-//            .onEach { url ->
-//                fetchLinkPreview(url)
-//            }
-//            .launchIn(viewModelScope)
-//    }
 
     private fun fetchLinkPreview(url: String) {
         // Cancel previous fetch job if it's still running
