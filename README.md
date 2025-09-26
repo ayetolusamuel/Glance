@@ -1,1 +1,1 @@
-[![Develop Branch](https://img.shields.io/badge/branch-develop-blue)](https://github.com/USERNAME/REPO/tree/develop)
+[![Develop Branch](https://img.shields.io/badge/branch-develop-blue)](https://github.com/ayetolusamuel/Glance/tree/develop)
