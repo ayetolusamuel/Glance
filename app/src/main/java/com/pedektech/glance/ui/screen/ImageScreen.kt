@@ -1,5 +1,6 @@
 package com.pedektech.glance.ui.screen
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pedektech.glance.ui.components.*
@@ -15,8 +17,13 @@ import com.pedektech.glance.ui.theme.AppColors
 
 @Composable
 fun ImageScreen(
+    sharedUrl: String? = null,
     viewModel: ImageScreenViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(!sharedUrl.isNullOrEmpty()) {
+        if (!sharedUrl.isNullOrEmpty() && sharedUrl.length>3){viewModel.onInputTextChanged(sharedUrl.toString())}
+    }
     val uiState by viewModel.uiState.collectAsState()
 
     ScreenContent(
@@ -24,7 +31,7 @@ fun ImageScreen(
         onInputChange = viewModel::onInputTextChanged,
         isSharePressed = uiState.isSharePressed,
         onSharePressedChange = viewModel::onSharePressedChanged,
-        onShareClick = viewModel::onShareClicked,
+        onShareClick = { context, url -> viewModel.onShareClicked(context, url) },
         previewData = uiState.previewData,
         isLoading = uiState.isLoading,
         isFetching = uiState.isFetching
@@ -37,11 +44,12 @@ private fun ScreenContent(
     onInputChange: (String) -> Unit,
     isSharePressed: Boolean,
     onSharePressedChange: (Boolean) -> Unit,
-    onShareClick: () -> Unit,
+    onShareClick: (Context, String) -> Unit,
     previewData: com.pedektech.glance.data.model.LinkPreviewData?,
     isLoading: Boolean,
     isFetching: Boolean
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +100,12 @@ private fun ScreenContent(
         ShareActionButton(
             isPressed = isFetching || isSharePressed, // Disable during fetch
             onPressedChange = onSharePressedChange,
-            onClick = onShareClick
+            onClick = {
+                val urlToShare = inputText.ifEmpty {
+                    previewData?.url ?: ""
+                }
+                onShareClick(context, urlToShare)
+            }
         )
 
         Spacer(modifier = Modifier.height(32.dp))

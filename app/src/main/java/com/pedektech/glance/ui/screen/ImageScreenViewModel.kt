@@ -1,5 +1,7 @@
 package com.pedektech.glance.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pedektech.glance.data.model.LinkPreviewData
@@ -50,9 +52,46 @@ class ImageScreenViewModel @Inject constructor(
         _uiState.update { it.copy(isSharePressed = isPressed) }
     }
 
-    fun onShareClicked() {
-        // Handle share functionality
+    // Share functionality implementation
+    fun onShareClicked(
+        context: Context,
+        url: String,
+        title: String = "",
+        description: String = ""
+    ) {
+        val shareText = buildString {
+            if (title.isNotEmpty()) {
+                append(title)
+                append("\n\n")
+            }
+            if (description.isNotEmpty()) {
+                append(description)
+                append("\n\n")
+            }
+            append(url)
+        }
+
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            putExtra(Intent.EXTRA_SUBJECT, title.ifEmpty { "Check out this link" })
+        }
+
+        val chooserIntent = Intent.createChooser(shareIntent, "Share link via")
+
+        try {
+            context.startActivity(chooserIntent)
+        } catch (e: Exception) {
+            // Handle error - maybe show a toast
+            android.widget.Toast.makeText(
+                context,
+                "No apps available to share",
+                android.widget.Toast.LENGTH_SHORT
+            ).show()
+        }
     }
+
 
     private fun setupUrlDebouncing() {
         _uiState
