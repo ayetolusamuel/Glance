@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
         // Enable edge-to-edge display
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+
         // Initialize logging
 //        if (BuildConfig.DEBUG) {
 //            Timber.plant(Timber.DebugTree())
@@ -25,13 +26,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                LinkPreviewApp()
+                ImageScreen()
             }
         }
     }
-}
-
-@Composable
-fun LinkPreviewApp() {
-    ImageScreen()
 }
